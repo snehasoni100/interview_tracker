@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/styles.css">
+<%- include('partials/header'); -%>
+
+<header>
+ <div class="headings">
+    <h2>Welcome to Interview Tracker Website</h2>
+    <h3>Start your Practice</h3>
+    <% if(user){ %>
+      <form class="frn" id="form" >
+        <input type="text" placeholder="Search friends" name="username"id="userna">
+        <button>Get friends</button>
+      </form> 
+      <h4 class="dis" id="usn"><%=user.username %></h4>
+      
+    <a href="/requests/<%=user.username%>" class="btn">Get pending requests</a>
+    <a href="/friends/<%=user.username%>" class="btn">Your Friends</a>
+    <%}%>
+    <a href="/smoothies" class="btn">Topics for practice</a>
+
+  </div>
+ 
+</header>
+
+
+
+
+<div  id="resp"></div>
+<div class="loginPopup" >
+  <div class="formPopup" id="popupForm">
+    <form class="formContainer" id="sec">
+      <h2>Friend</h2>
+      <h4 id="response" name="usern"></h4>
+      <h5 id="response1"></h5>
+      
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      <button type="button" class="btn" id="bun" onclick="send()">Add Friend</button>
+    </form>
+  </div>
+</div>
+
+ <script>
+  const responseDiv = document.getElementById('response');
+  const responseDiv1 = document.getElementById('response1');
+  function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+  function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+       
+      }
+ 
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username=form.username.value;
+    
+    const url="getuser/" + username;
+    console.log(url)
+    try {
+      const res = await fetch(url, { 
+        method: 'GET', 
+      });
+      const data = await res.json();
+      if (data) {
+        console.log(data);
+       responseDiv.innerHTML = data.user.username;
+       responseDiv1.innerHTML = data.user.email;
+       
+       
+      
+        openForm();
+        
+      }
+      else if (data.errors) {
+        console.log(error);
+      }
+      
+     
+    } 
+    catch (err) {
+      console.log(err);
+    }
+    
+  });
+  
+  async function send()
+    
+    {
+   const name = document.getElementById('response').innerHTML;
+   const byname = document.getElementById('usn').innerHTML;
+   console.log(byname)
+    const response = await fetch("/sendreq", { 
+       method: 'POST', 
+      body: JSON.stringify({ name,byname}),
+        headers: {'Content-Type': 'application/json'}
+    });
+    const data = await response.json();
+    console.log("working"+name+data);
+  window.prompt("added");
+    //console.log(data);
+      
+    }
+
+</script> 
+
+ 
+
+
+
+<%- include('partials/footer'); -%>
+
+
+
+
+
+
+
+
+
+

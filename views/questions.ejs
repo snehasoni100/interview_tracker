@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="/styles.css">
+<%- include('partials/header'); -%>
+<h4 class="dis" id="usn"><%=user._id %></h4>
+
+<h2>Questions List </h2>
+<br>
+<h2><%=topicname%></h2>
+<button onclick="getallcomments()"class="btn3">Show all comments</button>
+<form class="shw" id="showcom"><h4>comment:</h4>
+  <h5 id="res"></h5>
+  <button onclick="cls()">close</button></form>
+  <form class="shw" id="shownocom"><h4>comment:</h4>
+    <h5>No comments</h5>
+    <button onclick="cls()">close</button></form>
+    <form class="shw" id="showallcom"><h4>comments:</h4>
+      <h5 id="allcom"></h5>
+      <button onclick="cls()">close</button></form>
+<br>
+<br>
+  <% for(var i=0; i < questions.length; i++) { %>
+  <li class="rec">
+      
+     <h4><a href= "/questionData/?url=<%= questions[i].linkto %>"><%= questions[i].name %></a> </h4><input type="checkbox" class="chk"id="myCheckBox"> 
+     <h4 class="dis" id="quen"><%=questions[i]._id %></h4>
+     <div  id="resp"></div>
+     <div class="loginPopup" >
+       <div class="formPopup" id="popupForm">
+         <form class="formContainer" id="sec">
+       
+           <h4>add comment</h4>
+          <input type="text" id="tx">
+           <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+           <button type="button" class="btn" id="bun" onclick="addcom()">Add</button>
+         </form>
+       </div>
+     </div>
+     <button class="btn4" onclick="com('<%=questions[i]._id%>')">Add comment</button>
+     <button class="btn2" onclick="show('<%=questions[i]._id%>')">show comment</button>
+  </li>
+  <br>
+<br>
+ <% } %>
+
+ 
+</body>
+<script>
+  var name="";
+  async function getallcomments()
+  {
+    const responseDiv = document.getElementById('showallcom');
+    const res = await fetch("/getallcomments", { 
+        method: 'GET', 
+      });
+      const data = await res.json();
+     if(data.comments.length==0)
+     {
+      document.getElementById("shownocom").style.display = "block";
+     }
+     else
+     {
+      console.log(data);
+        for(var i=0;i<data.comments.length;i++)
+        {
+          responseDiv.innerHTML =responseDiv.innerHTML+ "<br>"+data.comments[i].text;
+        }
+        
+        document.getElementById("showallcom").style.display = "block";
+     }
+       
+      
+  }
+  function com(c) {
+        document.getElementById("popupForm").style.display = "block";
+        console.log(c);
+        name=c;
+        
+      }
+  function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+       
+      }
+      function cls()
+      {
+        document.getElementById("showcom").style.display = "none";
+      }
+   async function show(id)
+   {
+    const responseDiv = document.getElementById('res');
+     const url="http://localhost:3000/getcomment/"+id;
+     console.log(url)
+    
+      const res = await fetch(url, { 
+        method: 'GET', 
+      });
+      const data = await res.json();
+      if (data.comment==null) {
+        document.getElementById("shownocom").style.display = "block"
+        
+      }
+      else
+      {
+        console.log(data);
+        responseDiv.innerHTML = data.comment.text;
+        document.getElementById("showcom").style.display = "block";
+      }
+   } 
+  async function addcom()
+  {
+    const userid = document.getElementById('usn').innerHTML;
+  const queid = name;
+
+  const txt=document.getElementById('tx').value;
+    console.log(userid);
+    console.log(queid);
+    console.log(txt);
+  
+  const response = await fetch("/comment", { 
+     method: 'POST', 
+    body: JSON.stringify({ userid,queid,txt}),
+      headers: {'Content-Type': 'application/json'}
+  });
+  const data = await response.json();
+  console.log("working");
+
+    
+  
+   }
+</script>
+<%- include('partials/footer'); -%>

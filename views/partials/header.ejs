@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <h1><a href="/">Interview Tracker</a></h1>
+    <ul>
+      <% if(user && image) { %>
+         
+       
+              <li><%=user.username  %></li>
+              <li><%= user.email %></li>
+             
+               <!-- <%=console.log(user) %> -->
+              
+      <li><a href="/logout">Log out</a></li>
+
+      <li>
+        
+       
+       
+     
+        <div class="dropdown">
+         <img class="user"src="data:<%= image.image.contentType %>;base64,<%= image.image.data.toString('base64') %>" >
+          <div class="dropdown-content">
+             
+            <a><%= user.username %></a>
+            <a> <%= user.email %></a>
+           
+            <a href="/images/?User=<%= user.email%>">Profile Image</a>
+           
+            <a href="/logout">Log out</a>
+          </div>
+        </div>
+           
+
+             <a href="/imageupload/"> <img class="in" src="/ic.jpeg"  >
+            </a> 
+           
+         
+          
+        </li>
+     
+        <% } else if(user) { %>
+         
+       
+          <li><%=user.username  %></li>
+          <li><%= user.email %></li>
+         
+           <!-- <%=console.log(user) %> -->
+          
+  <li><a href="/logout">Log out</a></li>
+
+  <li>
+    
+   
+   
+ 
+    <div class="dropdown">
+     <img class="user"src="/userimage.png" >
+      <div class="dropdown-content">
+         
+        <a><%= user.username %></a>
+        <a> <%= user.email %></a>
+       
+        <a href="/images/?User=<%= user.email%>">Profile Image</a>
+       
+        <a href="/logout">Log out</a>
+      </div>
+    </div>
+       
+
+         <a href="/imageupload/"> <img class="in" src="/ic.jpeg"  >
+        </a> 
+       
+     
+      
+    </li>
+  <% } else { %>
+      <li><a href="/login">Log in</a></li>
+      <li><a href="/signup" class="btn">Sign up</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  

@@ -1,0 +1,28 @@
+
+<link rel="stylesheet" href="/styles.css">
+<%- include('partials/header'); -%>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Image </title>
+</head>
+
+
+<body>
+    <h1>uploaded Images</h1>
+    <hr />
+   
+
+                  
+             
+                        <div class="grid-container">
+                
+                            <img class="gridimg" src="data:<%= images.image.contentType %>;base64,<%= images.image.data.toString('base64') %>" />
+                        </div>
+                            
+</body>
+
+</html>
+<%- include('partials/footer'); -%>

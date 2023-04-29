@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/styles.css">
+<%- include('partials/header'); -%>
+    
+    <h1>Pending Friend Requests </h1>
+    <br>
+    <br>
+    <ul>
+        <% for(var i = 0; i < names.length; i++) { %>
+            <form>
+                <h5><%= names[i] %></h5>
+                <h5><%= ema[i] %></h5>
+               
+                <a href="/accept/<%=user.username%>/<%=names[i]%>" class="btn1">accept</a>
+               
+            </form>
+            <br>
+            <br>
+        <% } %>
+    
+      </ul>
+
+
+          
+
+        
+               
+     
+<%- include('partials/footer'); -%>
