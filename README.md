@@ -1,5 +1,5 @@
 # Interview_tracker
-#### This website is made for helping people preparing for the coding interviews. It provides them list of important questions for practice.People Can also add important questions from admin page which provides access to only admins.they can also connect to there friends by sending and accepting friend requests.
+#### This website is made for helping people preparing for the coding interviews. It provides them list of important questions for practice.people can also add important questions from admin page which provides access to only admins.they can also connect to there friends by sending and accepting friend requests.
 ## Screenshots of different pages are:
 ### HOME PAGE
 ##### The first page or the home page after opening the webiste
